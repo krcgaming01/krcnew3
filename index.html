@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>HomePage KRC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              haverbrooke: ['Haverbrooke', 'Georgia', 'serif'],
+              poppins: ['Poppins', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @font-face {
+        font-family: 'Haverbrooke';
+        src: url('fonts/Haverbrooke.otf') format('opentype'),
+             url('fonts/Haverbrooke.ttf') format('truetype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      body {
+        background-color: #0f0f0f;
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+        background-attachment: fixed;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      /* Menu Hamburger */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: white;
+        transition: 0.3s;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+
+      .menu {
+        list-style: none;
+        display: flex;
+        gap: 40px;
+        margin: 0;
+        padding: 0;
+      }
+
+      .menu li a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+
+      .menu li a.active,
+      .menu li a:hover {
+        color: #e60000;
+      }
+
+      /* Hero Section */
+      .banner {
+        width: 100%;
+        background: linear-gradient(180deg, #918e8e 0%, #d9d9d9 100%);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 60px 20px;
+        flex-wrap: wrap;
+        gap: 40px;
+      }
+
+      .produto {
+        max-width: 100%;
+        width: 100%;
+        max-width: 450px;
+        border-radius: 12px;
+      }
+
+      .texto {
+        text-align: left;
+        max-width: 500px;
+      }
+
+      .texto h1 {
+        font-size: 60px;
+        margin: 0;
+        font-weight: 900;
+        color: #000000;
+        line-height: 1.1;
+      }
+
+      .texto button {
+        margin-top: 25px;
+        padding: 14px 30px;
+        background: transparent;
+        border: 2px solid #000000;
+        border-radius: 30px;
+        color: #000000;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .texto button:hover {
+        background: #e60000;
+        border-color: #e60000;
+        color: #fff;
+      }
+
+      /* News Cards */
+      .news-card {
+        display: flex;
+        background: #1a1a1a;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+        margin-bottom: 20px;
+      }
+
+      .news-card img {
+        width: 40%;
+        object-fit: cover;
+      }
+
+      .news-info {
+        padding: 20px;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .time {
+        color: #aaa;
+        font-size: 0.9rem;
+      }
+
+      .read-btn {
+        background: #f90000;
+        color: #000;
+        padding: 10px 15px;
+        text-decoration: none;
+        font-weight: bold;
+        width: fit-content;
+        border-radius: 4px;
+        margin-top: 15px;
+        transition: 0.2s;
+      }
+
+      .read-btn:hover {
+        background: #ff3333;
+      }
+
+      /* Product Cards */
+      .product-card {
+        background: #000000;
+        border: 3px solid #2a2a2a;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        border-color: #e60000;
+        box-shadow: 0 10px 30px rgba(230, 0, 0, 0.3);
+      }
+
+      .product-image-container {
+        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 250px;
+      }
+
+      .product-image {
+        max-width: 100%;
+        max-height: 200px;
+        object-fit: contain;
+      }
+
+      .product-info {
+        background: #000000;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .product-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+
+      .product-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #e60000;
+      }
+
+      .section-title {
+        font-family: 'Haverbrooke', 'Georgia', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 50px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        padding-bottom: 20px;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 3px;
+        background: #e60000;
+      }
+
+      /* Responsividade Mobile */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        .menu {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          flex-direction: column;
+          background: #000000;
+          width: 100%;
+          padding: 20px;
+          gap: 20px;
+          transition: 0.3s;
+          border-top: 1px solid #333;
+          z-index: 999;
+        }
+
+        .menu.active {
+          left: 0;
+        }
+
+        nav {
+          padding: 1rem !important;
+        }
+
+        .logosem {
+          height: 40px !important;
+          width: 40px !important;
+        }
+
+        nav img[alt="brasil"] {
+          height: 25px !important;
+        }
+
+        .banner {
+          padding: 30px 15px;
+          gap: 20px;
+        }
+
+        .texto h1 {
+          font-size: 40px;
+        }
+
+        .texto button {
+          padding: 12px 25px;
+          font-size: 16px;
+        }
+
+        .produto {
+          max-width: 300px;
+        }
+
+        .section-title {
+          font-size: 1.8rem;
+        }
+
+        .news-card {
+          flex-direction: column;
+        }
+
+        .news-card img {
+          width: 100%;
+          max-height: 200px;
+        }
+
+        .news-info h3 {
+          font-size: 1.5rem !important;
+        }
+      }
+
+      /* Responsividade Tablet */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .menu {
+          gap: 25px;
+        }
+
+        .texto h1 {
+          font-size: 50px;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+      }
+
+      .logosem {
+        height: 50px;
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body class="bg-[#0f0f0f] flex flex-col justify-start min-h-screen">
+    
+    <!-- Navegação -->
+    <nav class="w-full bg-[#0f0f0f] sticky top-0 z-50 shadow-lg">
+      <div class="max-w-[1200px] font-haverbrooke mx-auto h-auto flex items-center justify-between py-4 px-4">
+        <img src="img/logo_sem_escrita-removebg-preview.webp" alt="logokrc" class="logosem">
+        
+        <div class="menu-toggle" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <ul class="menu" id="menu">
+          <li><a href="#times" class="text-white text-sm hover:text-gray-400">Time</a></li>
+          <li><a href="#partidas" class="text-white text-sm hover:text-gray-400">Partidas</a></li>
+          <li><a href="#noticias" class="text-white text-sm hover:text-gray-400">Notícias</a></li>
+          <li><a href="#loja" class="text-white text-sm hover:text-gray-400">Loja</a></li>
+          <li><a href="#contatos" class="text-white text-sm hover:text-gray-400">Contatos</a></li>
+        </ul>
+        
+        <img src="img/brasil.png" class="h-8" alt="brasil" />
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="times" class="w-full max-w-[1200px] mx-auto py-8 px-4"></div>
+    <section class="hero mt-0">
+      <div class="banner">
+        <img src="img/moletom.webp" alt="MOLETOM KRC" class="produto">
+        <div class="texto">
+          <h1 class="">MOLETOM OFICIAL</h1>
+          <button onclick="scrollToProdutos()">Disponível agora</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Jogos -->
+    <div class="w-full max-w-[1200px] mx-auto py-8 px-4">
+      <h2 class="section-title">JOGOS</h2>
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+        <img src="img/cs2logo.webp" alt="cslogo" class="w-full max-w-[300px]">
+        <img src="img/clash.webp" alt="clash royale logo" class="w-full max-w-[300px]">
+        <img src="img/Design sem nome.png" alt="Call_of_Duty_Warzone_Logo" class="w-full max-w-[300px]">
+      </div>
+    </div>
+
+    <!-- Partidas -->
+    <div id="partidas" class="w-full max-w-[1200px] mx-auto py-8 px-4">
+      <h2 class="section-title">PARTIDAS</h2>
+      <div class="w-full flex justify-center">
+        <img src="img/Group_35.webp" alt="Partidas" class="w-full max-w-[800px]">
+      </div>
+    </div>
+
+    <!-- Notícias -->
+    <div id="noticias" class="w-full max-w-[1200px] mx-auto py-8 px-4">
+      <h2 class="section-title">NOTÍCIAS</h2>
+      <div class="news-section">
+        
+        <!-- Notícia 1 -->
+        <div class="news-card">
+          <img src="img/camisa_krc-removebg-preview.png" alt="camisa nova">
+          <div class="news-info">
+            <p class="time">2 horas atrás • 4 min read</p>
+            <h3 class="text-white text-4xl font-bold font-haverbrooke">A KRC lançou oficialmente sua camisa de 2025.</h3>
+            <p>Revelamos com orgulho nossa mais nova camisa durante uma grande cerimônia. O design elegante apresenta uma mistura perfeita de estética moderna e elementos clássicos, tornando-a um verdadeiro chamariz.</p>
+            <a href="#" class="read-btn">LER MAIS</a>
+          </div>
+        </div>
+
+        <!-- Notícia 2 -->
+        <div class="news-card">
+          <img src="img/logokrc2.webp" alt="Breno MVP">
+          <div class="news-info">
+            <p class="time">1 dia atrás • 7 min read</p>
+            <h3 class="text-white text-4xl font-bold font-haverbrooke">Breno, nosso melhor jogador de clash royale, ganhou a CRL!</h3>
+            <p>O único Brasileiro a ganhar um campeonato de clash royale representando a KRC. Parabéns @brenolima, estamos muito orgulhosos de você!</p>
+            <a href="#" class="read-btn">LER MAIS</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Produtos -->
+    <div id="loja" class="w-full max-w-[1200px] mx-auto py-16 px-4">
+      <h2 class="section-title">PRODUTOS</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Produto 1 -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="img/moletomkrc-removebg-preview.png" alt="Moletom KRC" class="product-image">
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Moletom KRC</h3>
+            <p class="product-price">R$249,90</p>
+          </div>
+        </div>
+
+        <!-- Produto 2 -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="img/chaveirokrc-removebg-preview.png" alt="Chaveiro KRC" class="product-image">
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Chaveiro KRC</h3>
+            <p class="product-price">R$20,00</p>
+          </div>
+        </div>
+
+        <!-- Produto 3 -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="img/garrafa-removebg-preview.png" alt="Garrafa térmica KRC" class="product-image">
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Garrafa térmica KRC</h3>
+            <p class="product-price">R$59,99</p>
+          </div>
+        </div>
+
+        <!-- Produto 4 -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="img/caneca_vermelha-removebg-preview.png" alt="Caneca KRC" class="product-image">
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Caneca KRC</h3>
+            <p class="product-price">R$49,99</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Botão Ver Mais -->
+      <div class="text-center mt-10">
+        <a href="loja.html" class="inline-block bg-[#e60000] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#ff3333] transition-all duration-300 shadow-lg hover:shadow-xl">
+          Ver Todos os Produtos
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#1a1a1a] text-white">
+      <div id="contatos" class="w-full max-w-[1200px] mx-auto py-8"></div>
+      <div class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          
+          <!-- Logo -->
+          <div>
+            <img class="w-32 h-auto mb-6" src="img/Group_27-removebg-preview.png" alt="KRC">
+          </div>
+
+          <!-- Termos -->
+          <div>
+            <h3 class="text-lg font-bold mb-4 uppercase">Termos e Políticas</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-gray-400 transition">Política de Reembolso</a></li>
+              <li><a href="#" class="hover:text-gray-400 transition">Política de Frete</a></li>
+              <li><a href="#" class="hover:text-gray-400 transition">Política de Privacidade</a></li>
+            </ul>
+          </div>
+
+          <!-- Newsletter -->
+          <div>
+            <h3 class="text-lg font-bold mb-4 uppercase">Inscreva-se!</h3>
+            <form class="space-y-3">
+              <input type="email" placeholder="E-mail" class="w-full px-4 py-3 bg-[#2b2b2b] text-white rounded border-none outline-none focus:ring-2 focus:ring-gray-600">
+              <button type="submit" class="w-full px-4 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition uppercase">Enviar E-Mail</button>
+              <p class="text-xs text-gray-400 mt-3">Ao assinar, você concorda com os Termos de Uso e a Política de Privacidade.</p>
+            </form>
+          </div>
+
+          <!-- Redes Sociais -->
+          <div>
+            <div class="mb-8">
+              <h3 class="text-lg font-bold mb-4 uppercase">Redes Sociais</h3>
+              <ul class="space-y-2">
+                <li><a href="#" class="hover:text-gray-400 transition">Twitter</a></li>
+                <li><a href="#" target="_blank" class="hover:text-gray-400 transition">Instagram</a></li>
+                <li><a href="#" class="hover:text-gray-400 transition">Tiktok</a></li>
+                <li><a href="#" class="hover:text-gray-400 transition">Youtube</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold mb-4 uppercase">Categorias da Loja</h3>
+              <ul class="space-y-2">
+                <li><a href="#" class="hover:text-gray-400 transition">SHOP</a></li>
+                <li><a href="#" class="hover:text-gray-400 transition">COLEÇÕES</a></li>
+                <li><a href="#" class="hover:text-gray-400 transition">SALE</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Ícones Sociais -->
+        <div class="flex justify-center gap-6 mt-12 pt-8 border-t border-gray-700">
+          <a href="#" class="text-2xl hover:text-gray-400 transition"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/t3rrifiergg" target="_blank" class="text-2xl hover:text-gray-400 transition"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-2xl hover:text-gray-400 transition"><i class="fab fa-tiktok"></i></a>
+          <a href="#" class="text-2xl hover:text-gray-400 transition"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="bg-[#0d0d0d] py-8">
+        <div class="max-w-7xl mx-auto px-6">
+          
+          <!-- Patrocinadores -->
+          <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-8">
+            <img class="w-28 md:w-36 h-auto grayscale hover:grayscale-0 transition opacity-70 hover:opacity-100" src="img/loide_mono.png" alt="Loide">
+            <img class="w-28 md:w-36 h-auto grayscale hover:grayscale-0 transition opacity-70 hover:opacity-100" src="img/Group_27-removebg-preview.png" alt="Patrocinador">
+            <img class="w-28 md:w-36 h-auto grayscale hover:grayscale-0 transition opacity-70 hover:opacity-100" src="img/nb branca.png" alt="New balance">
+          </div>
+
+          <!-- Copyright -->
+          <div class="text-center text-sm text-gray-400">
+            <p>© Copyright, <a href="#" class="underline hover:text-white transition">Knight Rising Champions</a>, 2025. Todos os direitos reservados</p>
+          </div>
+
+          <!-- Formas de Pagamento -->
+          <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
+            <div class="bg-white px-3 py-2 rounded"><span class="text-blue-600 font-bold text-xs">VISA</span></div>
+            <div class="bg-white px-3 py-2 rounded flex items-center justify-center"><div class="w-8 h-8 bg-gray-800 rounded-full"></div></div>
+            <div class="bg-white px-3 py-2 rounded"><span class="text-black font-bold text-xs">ELO</span></div>
+            <div class="bg-white px-3 py-2 rounded"><span class="text-orange-600 font-bold text-xs">Discover</span></div>
+            <div class="bg-white px-3 py-2 rounded"><span class="text-teal-600 font-bold text-xs">PIX</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp Button -->
+      <a href="https://wa.me/5521999999999" target="_blank" class="fixed bottom-8 right-8 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-110 z-50">
+        <i class="fab fa-whatsapp text-3xl"></i>
+      </a>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById('menu');
+        const toggle = document.querySelector('.menu-toggle');
+        menu.classList.toggle('active');
+        toggle.classList.toggle('active');
+      }
+
+      // Fechar menu ao clicar em um link
+      document.querySelectorAll('.menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          const menu = document.getElementById('menu');
+          const toggle = document.querySelector('.menu-toggle');
+          menu.classList.remove('active');
+          toggle.classList.remove('active');
+        });
+      });
+
+      // Função para rolar até a seção de produtos
+      function scrollToProdutos() {
+        const lojaSection = document.getElementById('loja');
+        if (lojaSection) {
+          lojaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    </script>
+
+  </body>
+</html>
